@@ -14,9 +14,14 @@
     server.get(/proxy(.*)/, function (req, res) {
         var url = req.params[0];
         http.get('http://chat.radio-t.com' + url, function (result) {
-            result.on('data', function (response) {
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.write(response.toString('utf-8'));
+            var data = '';
+            result.on('data', function (chunck) {
+                data += chunck;
+            });
+
+            result.on('end', function () {
+                res.setHeader('Content-Type', 'application/json');
+                res.write(data.toString('utf-8'));
                 res.end();
             });
         });

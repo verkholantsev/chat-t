@@ -6,14 +6,29 @@ body {
 }
 
 .message {
+    padding: .25em 7em .25em .5em;
     position: relative;
-    padding-right: 7em;
-    padding-left: .5em;
+    /*padding-right: 7em;*/
+    /*padding-left: .5em;*/
 }
 
 .message .from,
 .message .text {
     display: inline;
+}
+
+.message .from {
+    padding: 0 .5em;
+    border: 1px solid transparent;
+    border-radius: .5em;
+}
+
+.message .from.special {
+    border-color: lightPink;
+}
+
+.message .from.bot {
+    border-color: lightSkyBlue;
 }
 
 .message .time {

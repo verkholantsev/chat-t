@@ -5,6 +5,10 @@
     'use strict';
 
     var INTERVAL = 10 * 1000,
+        SPECIAL_NICKS = ['umputun', 'bobuk'],
+        BOT_NICKS = ['jc-radio-t'],
+        GET_URL = '/api/last/50',
+        NEW_URL = '/api/new/',
         msgs = null,
         model = null,
         intervalId = null;
@@ -29,6 +33,44 @@
         return moment(value).format('hh:mm:ss MM.DD.YYYY');
     };
 
+    rivets.formatters.escape = function (value) {
+        return $('<div>').text(value).html();
+    };
+
+    rivets.binders.special = function (node, value) {
+        if (value) {
+            $(node).addClass('special');
+        } else {
+            $(node).removeClass('special');
+        }
+    };
+
+    rivets.binders.bot = function (node, value) {
+        if (value) {
+            $(node).addClass('bot');
+        } else {
+            $(node).removeClass('bot');
+        }
+    };
+
+    var Message = Backbone.Model.extend({
+        parse: function (attrs) {
+            if (SPECIAL_NICKS.indexOf(attrs.from.toLowerCase()) > -1) {
+                attrs.special = true;
+            }
+
+            if (BOT_NICKS.indexOf(attrs.from.toLowerCase()) > -1) {
+                attrs.bot = true;
+            }
+
+            return attrs;
+        }
+    });
+
+    var Messages = Backbone.Collection.extend({
+        model: Message
+    });
+
     var Chat = Backbone.Model.extend({
         initialize: function (attrs) {
             var _this = this;
@@ -43,9 +85,9 @@
 
         $.ajax({
             type: 'GET',
-            url: '/api/last/50'
+            url: GET_URL
         }).success(function (data) {
-            msgs = new Backbone.Collection(data.msgs);
+            msgs = new Messages(data.msgs, {parse: true});
             model = new Chat({msgs: msgs});
             rivets.bind(msgsNode, {model: model});
 
@@ -56,11 +98,13 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/api/new/' + maxSeq
+                    url: NEW_URL + maxSeq
                 }).success(function (data) {
                     model.get('msgs').push(data.msgs);
                 });
             }, INTERVAL);
+        }).error(function () {
+            console.log(arguments);
         });
     });
 

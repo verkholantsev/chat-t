@@ -15,7 +15,7 @@
 	<div class="container">
 		<div id="msgs">
 			<div rv-each-msg="model:msgs" class="message">
-				<div rv-text="msg:from" class="from"></div>
+				<div rv-text="msg:from" rv-special="msg:special" rv-bot="msg:bot" class="from"></div>
 				<div rv-text="msg:msg" class="text"></div>
 				<div rv-text="msg:time | date" class="time"></div>
 			</div>
