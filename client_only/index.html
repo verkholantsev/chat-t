@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Chat</title>
+	<script type="text/javascript" src="http://yandex.st/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="http://yandex.st/underscore/1.5.2/underscore-min.js"></script>
+	<script type="text/javascript" src="http://yandex.st/backbone/1.1.0/backbone-min.js"></script>
+	<script type="text/javascript" src="http://www.rivetsjs.com/dist/rivets.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
+	<script type="text/javascript" src="/chat-t.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+	<div class="container">
+		<div id="msgs">
+			<div rv-each-msg="model:msgs" class="message">
+				<div rv-text="msg:from" class="from"></div>
+				<div rv-text="msg:msg" class="text"></div>
+				<div rv-text="msg:time | date" class="time"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

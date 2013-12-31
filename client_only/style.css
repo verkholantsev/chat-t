@@ -1,0 +1,39 @@
+body {
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 22px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.message {
+    position: relative;
+    padding-right: 7em;
+    padding-left: .5em;
+}
+
+.message .from,
+.message .text {
+    display: inline;
+}
+
+.message .time {
+    display: none;
+    position: absolute;
+    font-size: 16px;
+    padding-right: .5em;
+    color: #999;
+    right: 0;
+    top: .25em;
+}
+
+.message:hover {
+    background-color: whiteSmoke;
+}
+
+.message:hover .time {
+    display: inline-block;
+}
+
+.message .from {
+    font-weight: 400;
+}
