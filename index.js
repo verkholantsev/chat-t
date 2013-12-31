@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var PORT = 80,
+    var PORT = 8080,
         http = require('http'),
         express = require('express'),
         server = express();
