@@ -100,7 +100,7 @@
                     type: 'GET',
                     url: NEW_URL + maxSeq
                 }).success(function (data) {
-                    model.get('msgs').push(data.msgs);
+                    model.get('msgs').push(data.msgs, {parse: true});
                 });
             }, INTERVAL);
         }).error(function () {
