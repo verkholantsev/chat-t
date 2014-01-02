@@ -11,7 +11,7 @@
 
     server.use(express['static'](__dirname + '/public'));
 
-    server.get(/proxy(.*)/, function (req, res) {
+    server.get(/(.*)/, function (req, res) {
         var url = req.params[0];
         http.get('http://chat.radio-t.com' + url, function (result) {
             var data = '';

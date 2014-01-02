@@ -7,8 +7,8 @@
     var INTERVAL = 10 * 1000,
         SPECIAL_NICKS = ['umputun', 'bobuk'],
         BOT_NICKS = ['jc-radio-t'],
-        GET_URL = '/proxy/api/last/50',
-        NEW_URL = '/proxy/api/new/',
+        GET_URL = '/api/last/50',
+        NEW_URL = '/api/new/',
         msgs = null,
         model = null,
         intervalId = null;
@@ -72,6 +72,9 @@
     });
 
     var Chat = Backbone.Model.extend({
+        defaults: {
+            inited: false
+        },
         initialize: function (attrs) {
             var _this = this;
             attrs.msgs.on('add', function () {
@@ -106,6 +109,7 @@
             msgs = new Messages(data.msgs, {parse: true});
             model = new Chat({msgs: msgs});
             rivets.bind(msgsNode, {model: model});
+            model.set('inited', true);
 
             updateScroll();
             $(window).on('scroll', watchScroll);

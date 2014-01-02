@@ -1,8 +1,11 @@
 body {
+    width: 100%;
     font-family: sans-serif;
     font-weight: 100;
     font-size: 22px;
     -webkit-font-smoothing: antialiased;
+    padding: 0;
+    margin: 0;
 }
 
 .message {
@@ -22,11 +25,11 @@ body {
 }
 
 .message .from.special {
-    border-color: lightPink;
+    border-color: lightpink;
 }
 
 .message .from.bot {
-    border-color: lightSkyBlue;
+    border-color: lightskyblue;
 }
 
 .message .time {
@@ -51,6 +54,18 @@ body {
     font-weight: 400;
 }
 
+.bottom-line {
+    display: none;
+    height: 3px;
+    width: 100%;
+    margin-top: .25em;
+    background-color: lightsteelblue;
+}
+
+.bottom-line.visible {
+    display: block;
+}
+
 @media (max-width: 400px) {
     body {
         font-size: 16px;
@@ -58,5 +73,9 @@ body {
 
     .message .time {
         display: inline-block;
+    }
+
+    .bottom-line {
+        height: 1px;
     }
 }
