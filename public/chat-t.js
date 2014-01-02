@@ -87,7 +87,6 @@
             scrollTop = $(window.document).scrollTop();
 
         needToScroll = documentHeight - viewportHieght <= scrollTop;
-        console.log(needToScroll);
     }
 
     function updateScroll () {
