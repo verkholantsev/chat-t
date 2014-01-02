@@ -92,7 +92,7 @@
     function updateScroll () {
         var documentHeight = $(window.document).height();
         if (needToScroll) {
-            $('html,body').scrollTop(documentHeight);
+            $('html,body').animate({scrollTop: documentHeight});
         }
     }
 
