@@ -1,7 +1,7 @@
 /*jslint nomen: true, vars: true */
-/*global jQuery:false, _:false, Backbone: false, console: false, rivets: false*/
+/*global jQuery:false, _:false, Backbone: false, console: false, rivets: fals, window:falsee*/
 
-(function ($, _, Backbone, rivets) {
+(function ($, _, Backbone, rivets, window) {
     'use strict';
 
     var INTERVAL = 10 * 1000,
@@ -80,6 +80,23 @@
         }
     });
 
+    var needToScroll = true;
+    function watchScroll () {
+        var viewportHieght = $(window).height(),
+            documentHeight = $(window.document).height(),
+            scrollTop = $(window.document).scrollTop();
+
+        needToScroll = documentHeight - viewportHieght <= scrollTop;
+        console.log(needToScroll);
+    }
+
+    function updateScroll () {
+        var documentHeight = $(window.document).height();
+        if (needToScroll) {
+            $('html,body').scrollTop(documentHeight);
+        }
+    }
+
     $(function () {
         var msgsNode = $('#msgs');
 
@@ -91,6 +108,9 @@
             model = new Chat({msgs: msgs});
             rivets.bind(msgsNode, {model: model});
 
+            updateScroll();
+            $(window.document).on('scroll', watchScroll);
+
             intervalId = setInterval(function () {
                 var maxSeq = model.get('msgs').reduce(function (result, message) {
                     return Math.max(result, message.get('seq'));
@@ -101,6 +121,7 @@
                     url: NEW_URL + maxSeq
                 }).success(function (data) {
                     model.get('msgs').push(data.msgs, {parse: true});
+                    updateScroll();
                 });
             }, INTERVAL);
         }).error(function () {
@@ -108,4 +129,4 @@
         });
     });
 
-}(jQuery, _, Backbone, rivets));
+}(jQuery, _, Backbone, rivets, window));
