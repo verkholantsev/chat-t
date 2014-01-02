@@ -6,10 +6,8 @@ body {
 }
 
 .message {
-    padding: .25em 7em .25em .5em;
+    padding: .25em 5em .25em .5em;
     position: relative;
-    /*padding-right: 7em;*/
-    /*padding-left: .5em;*/
 }
 
 .message .from,
@@ -51,4 +49,14 @@ body {
 
 .message .from {
     font-weight: 400;
+}
+
+@media (max-width: 400px) {
+    body {
+        font-size: 16px;
+    }
+
+    .message .time {
+        display: inline-block;
+    }
 }

@@ -30,7 +30,7 @@
     };
 
     rivets.formatters.date = function (value) {
-        return moment(value).format('hh:mm:ss MM.DD.YYYY');
+        return moment(value).format('hh:mm:ss');
     };
 
     rivets.formatters.escape = function (value) {
@@ -108,7 +108,7 @@
             rivets.bind(msgsNode, {model: model});
 
             updateScroll();
-            $(window.document).on('scroll', watchScroll);
+            $(window).on('scroll', watchScroll);
 
             intervalId = setInterval(function () {
                 var maxSeq = model.get('msgs').reduce(function (result, message) {
