@@ -39,7 +39,7 @@
     };
 
     rivets.formatters.link = function (value) {
-        return value.replace(/(http|https|ftp)\:\/\/([A-Za-zА-Яа-я0-9\.\-:\/\+_]+)/gi, '<a href="$&" target="_blank">$&</a>')
+        return value.replace(/(http|https|ftp)\:\/\/([A-Za-zА-Яа-я0-9-\._~:\/?#\[\]@!$&'\(\)\*\+,;=%]+)/gi, '<a href="$&" target="_blank">$&</a>')
     };
 
     var Message = Backbone.Model.extend({
