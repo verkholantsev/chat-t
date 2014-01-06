@@ -43,7 +43,7 @@ body {
 }
 
 .message:hover {
-    background-color: whiteSmoke;
+    background-color: whitesmoke;
 }
 
 .message:hover .time {
@@ -64,6 +64,13 @@ body {
 
 .bottom-line.visible {
     display: block;
+}
+
+.debug-info {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    background-color: white;
 }
 
 @media (max-width: 400px) {

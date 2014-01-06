@@ -5,7 +5,8 @@
     'use strict';
 
     var INTERVAL = 10 * 1000,
-        SPECIAL_NICKS = ['umputun', 'bobuk'],
+        SCROLL_DELTA = 100,
+        SPECIAL_NICKS = ['umputun', 'bobuk', '[bobuk]'],
         BOT_NICKS = ['jc-radio-t'],
         GET_URL = '/api/last/50',
         NEW_URL = '/api/new/',
@@ -33,26 +34,6 @@
         return moment(value).format('hh:mm:ss');
     };
 
-    rivets.formatters.escape = function (value) {
-        return $('<div>').text(value).html();
-    };
-
-    rivets.binders.special = function (node, value) {
-        if (value) {
-            $(node).addClass('special');
-        } else {
-            $(node).removeClass('special');
-        }
-    };
-
-    rivets.binders.bot = function (node, value) {
-        if (value) {
-            $(node).addClass('bot');
-        } else {
-            $(node).removeClass('bot');
-        }
-    };
-
     var Message = Backbone.Model.extend({
         parse: function (attrs) {
             if (SPECIAL_NICKS.indexOf(attrs.from.toLowerCase()) > -1) {
@@ -73,31 +54,36 @@
 
     var Chat = Backbone.Model.extend({
         defaults: {
-            inited: false
+            debug: false,
+            inited: false,
+            scrollEnabled: true
         },
         initialize: function (attrs) {
             var _this = this;
             attrs.msgs.on('add', function () {
                 _this.trigger('change:msgs');
             });
+
+            $(window).on('scroll', this.watchScroll.bind(this));
+        },
+        watchScroll: function () {
+            var viewportHeight = $(window).height(),
+                documentHeight = $(window.document).height(),
+                scrollTop = $(window.document).scrollTop();
+
+            this.set('documentHeight', documentHeight);
+            this.set('viewportHeight', viewportHeight);
+            this.set('scrollTop', scrollTop);
+            this.set('scrollTopPlusDelta', scrollTop + SCROLL_DELTA);
+            this.set('scrollEnabled', documentHeight - viewportHeight <= scrollTop + SCROLL_DELTA);
+        },
+        updateScroll: function () {
+            var documentHeight = $(window.document).height();
+            if (this.get('scrollEnabled')) {
+                $('html,body').animate({scrollTop: documentHeight});
+            }
         }
     });
-
-    var needToScroll = true;
-    function watchScroll () {
-        var viewportHieght = $(window).height(),
-            documentHeight = $(window.document).height(),
-            scrollTop = $(window.document).scrollTop();
-
-        needToScroll = documentHeight - viewportHieght <= scrollTop;
-    }
-
-    function updateScroll () {
-        var documentHeight = $(window.document).height();
-        if (needToScroll) {
-            $('html,body').animate({scrollTop: documentHeight});
-        }
-    }
 
     $(function () {
         var msgsNode = $('#msgs');
@@ -110,9 +96,7 @@
             model = new Chat({msgs: msgs});
             rivets.bind(msgsNode, {model: model});
             model.set('inited', true);
-
-            updateScroll();
-            $(window).on('scroll', watchScroll);
+            model.updateScroll();
 
             intervalId = setInterval(function () {
                 var maxSeq = model.get('msgs').reduce(function (result, message) {
@@ -124,7 +108,7 @@
                     url: NEW_URL + maxSeq
                 }).success(function (data) {
                     model.get('msgs').push(data.msgs, {parse: true});
-                    updateScroll();
+                    model.updateScroll();
                 });
             }, INTERVAL);
         }).error(function () {
