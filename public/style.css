@@ -8,6 +8,17 @@ body {
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+    color: rgb(0, 0, 255);
+    border-bottom: 1px solid rgba(0, 0, 255, .5);
+}
+
+a:visited {
+    color: rgb(85, 26, 139);
+    border-bottom-color: rgba(85, 26, 139, .5);
+}
+
 .message {
     padding: .25em 5em .25em .5em;
     position: relative;
