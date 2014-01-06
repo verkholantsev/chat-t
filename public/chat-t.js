@@ -31,7 +31,7 @@
     };
 
     rivets.formatters.date = function (value) {
-        return moment(value).format('hh:mm:ss');
+        return moment(value).format('HH:mm:ss');
     };
 
     var Message = Backbone.Model.extend({
