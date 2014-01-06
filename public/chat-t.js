@@ -34,6 +34,14 @@
         return moment(value).format('HH:mm:ss');
     };
 
+    rivets.formatters.escape = function (value) {
+        return $('<div>').text(value).html();
+    };
+
+    rivets.formatters.link = function (value) {
+        return value.replace(/(http|https|ftp)\:\/\/([A-Za-zА-Яа-я0-9\.\-:\/\+_]+)/gi, '<a href="$&" target="_blank">$&</a>')
+    };
+
     var Message = Backbone.Model.extend({
         parse: function (attrs) {
             if (SPECIAL_NICKS.indexOf(attrs.from.toLowerCase()) > -1) {

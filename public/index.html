@@ -19,13 +19,13 @@
                     <div rv-text="model:scrollEnabled"></div>
                     <div rv-text="model:documentHeight"></div>
                     <div rv-text="model:viewportHeight"></div>
-                    <div rv-text="model:scroll"></div>
+                    <div rv-text="model:scrollTop"></div>
                     <div rv-text="model:scrollTopPlusDelta"></div>
                 </div>
                 <div rv-scroll="model:scroll"></div>
                 <div rv-each-msg="model:msgs" class="message">
                     <div rv-text="msg:from" rv-class-special="msg:special" rv-class-bot="msg:bot" class="from"></div>
-                    <div rv-text="msg:msg" class="text"></div>
+                    <div rv-html="msg:msg | escape | link" class="text"></div>
                     <div rv-text="msg:time | date" class="time"></div>
                 </div>
                 <div rv-class-visible="model:inited" class="bottom-line"></div>
