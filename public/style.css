@@ -2,7 +2,7 @@ body {
     width: 100%;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
-    font-size: 22px;
+    font-size: 21px;
     -webkit-font-smoothing: antialiased;
     padding: 0;
     margin: 0;
@@ -30,9 +30,9 @@ a:visited {
 }
 
 .message .from {
-    padding: 0 .5em .2em;
+    padding: 0 .5em .1em;
     border: 1px solid transparent;
-    border-radius: .5em;
+    border-radius: .7em;
 }
 
 .message .from.special {
